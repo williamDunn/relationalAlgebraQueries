@@ -1,0 +1,31 @@
+1.	What are the primary keys for these three tables?
+
+Catalog – C#, Schedule – Sec#, Instructor - InName
+
+
+2.	List the names of faculty in the English department who have between 15 and 20 students in a class.
+
+((((Catalog where Dept='English') X (Schedule where Stdnts >= 15 and stdnts <= 20)) where C# = CNum) Join Instructor on InID)[InName]
+
+
+3.	List out the course number, section number and number of students in courses that have a size of over 20 and are taught in Lewis 02.
+
+(Schedule where Size > 20 and Room = ‘Lewis 02’)[CNum, Sec#, Stdnts]
+
+
+4.	List the name and join date of faculty that are not teaching this semester.
+
+((Instructor[InID] – Schedule[InID]) Join Instructor on InID)[InName, JoinDate]
+
+
+5.	For full time faculty teaching classes that are closed, list the instructor name, course number and section number.
+
+(Schedule join Instructor on InID) where Fulltime = True and Stdnts >= Size)[InName, CNum, Sec#]
+
+6.	List out the course name, instructor name and classroom number for all Computer Science courses taught by faculty that are not full time.
+
+(((Catalog where Dept = ‘Computer Science’) X Schedule) where C# = CNum) Join ((Instructor where Fulltime = False)[InName, InID]) on InID)[CName, InName,  Room#]
+
+
+7.	List the course name for courses where both section 1 and section 2 have under 10 enrolled students each.
+((Schedule where Sec# = 1 and Stdnts < 10)[CNum] ∩ ((Schedule where Sec# = 2 and Stdnts < 10)[CNum])) X Catalog) where C# = CNum)[CName]
